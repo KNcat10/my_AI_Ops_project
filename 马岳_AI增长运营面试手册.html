@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>马岳 · AI增长运营面试手册</title>
+<style>
+:root {
+  --bg: #0f0f11;
+  --surface: #18181c;
+  --surface2: #22222a;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0eeea;
+  --muted: #9896a0;
+  --teal: #4ecdc4;
+  --teal-dim: rgba(78,205,196,0.12);
+  --amber: #f7b731;
+  --amber-dim: rgba(247,183,49,0.12);
+  --coral: #ff6b6b;
+  --coral-dim: rgba(255,107,107,0.12);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --green: #6bcb77;
+  --green-dim: rgba(107,203,119,0.12);
+  --blue: #4d9de0;
+  --blue-dim: rgba(77,157,224,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,15,17,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border2);
+  padding: 0 16px;
+  display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0;
+  padding: 12px 14px;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  background: none; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.nav-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+/* SECTIONS */
+.section { display: none; padding: 20px 16px 80px; max-width: 720px; margin: 0 auto; }
+.section.active { display: block; }
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.card-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 10px;
+}
+h2 { font-size: 18px; font-weight: 600; margin-bottom: 14px; }
+h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+p { color: rgba(240,238,234,0.85); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+.hl { color: var(--teal); font-weight: 500; }
+.hl-amber { color: var(--amber); font-weight: 500; }
+.hl-coral { color: var(--coral); font-weight: 500; }
+.hl-purple { color: var(--purple); font-weight: 500; }
+/* BADGES */
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  padding: 2px 9px; border-radius: 99px; margin-right: 4px; margin-bottom: 4px;
+}
+.b-teal { background: var(--teal-dim); color: var(--teal); }
+.b-amber { background: var(--amber-dim); color: var(--amber); }
+.b-coral { background: var(--coral-dim); color: var(--coral); }
+.b-purple { background: var(--purple-dim); color: var(--purple); }
+.b-green { background: var(--green-dim); color: var(--green); }
+.b-blue { background: var(--blue-dim); color: var(--blue); }
+/* STAR */
+.star-block { margin-bottom: 14px; }
+.star-tag {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 6px; margin-bottom: 6px;
+}
+.tag-s { background: var(--amber-dim); color: var(--amber); }
+.tag-t { background: var(--blue-dim); color: var(--blue); }
+.tag-a { background: var(--green-dim); color: var(--green); }
+.tag-r { background: var(--coral-dim); color: var(--coral); }
+.divider { border: none; border-top: 0.5px solid var(--border); margin: 12px 0; }
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 12px 0; }
+.stat {
+  background: var(--surface2);
+  border-radius: 10px; padding: 10px;
+  text-align: center;
+}
+.stat .val { font-size: 17px; font-weight: 700; color: var(--teal); }
+.stat .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+/* QA */
+.qa-item { border-bottom: 0.5px solid var(--border); padding: 14px 0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q {
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+}
+.qa-q .arr { color: var(--muted); flex-shrink: 0; font-size: 12px; margin-top: 3px; }
+.qa-a {
+  display: none; margin-top: 10px;
+  padding: 12px; border-radius: 10px;
+  background: var(--surface2);
+  font-size: 13px; color: var(--muted);
+  line-height: 1.75;
+}
+.qa-a.open { display: block; }
+/* TIMELINE */
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px;
+  width: 1px; background: var(--border2);
+}
+.t-item { position: relative; margin-bottom: 14px; }
+.t-dot {
+  position: absolute; left: -18px; top: 5px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--teal);
+}
+.t-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.t-body { font-size: 12px; color: var(--muted); margin-top: 3px; }
+/* METHOD CARDS */
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 400px) { .method-grid { grid-template-columns: 1fr; } }
+.method-card {
+  background: var(--surface2);
+  border-radius: 10px; padding: 12px;
+}
+.method-card .m-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.method-card .m-body { font-size: 12px; color: var(--muted); line-height: 1.65; }
+/* RULE ITEM */
+.rule { padding: 10px 12px; background: var(--surface2); border-radius: 10px; border-left: 3px solid var(--teal); margin-bottom: 8px; }
+.rule.amber { border-left-color: var(--amber); }
+.rule.coral { border-left-color: var(--coral); }
+.rule.purple { border-left-color: var(--purple); }
+.rule-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.rule-body { font-size: 12px; color: var(--muted); }
+/* INTRO BLOCK */
+.intro-block {
+  background: linear-gradient(135deg, rgba(78,205,196,0.08), rgba(167,139,250,0.06));
+  border: 0.5px solid rgba(78,205,196,0.2);
+  border-radius: 14px; padding: 18px; margin-bottom: 14px;
+}
+.intro-text { font-size: 14px; line-height: 1.85; color: rgba(240,238,234,0.9); }
+/* TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+th { text-align: left; padding: 7px 8px; color: var(--muted); font-weight: 500; border-bottom: 0.5px solid var(--border2); }
+td { padding: 7px 8px; border-bottom: 0.5px solid var(--border); color: rgba(240,238,234,0.8); vertical-align: top; }
+/* SECTION HEADER */
+.sec-header { text-align: center; padding: 24px 0 20px; }
+.sec-header .sec-icon { font-size: 28px; margin-bottom: 8px; }
+.sec-header h1 { font-size: 22px; font-weight: 700; }
+.sec-header p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+/* TIP */
+.tip {
+  background: var(--amber-dim); border-left: 3px solid var(--amber);
+  border-radius: 8px; padding: 10px 12px;
+  font-size: 12px; color: var(--amber);
+  margin-top: 10px;
+}
+/* STEP */
+.step { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+.step-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--teal-dim); color: var(--teal);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-body { flex: 1; }
+.step-body .s-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.step-body .s-text { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="go('intro')">自我介绍</button>
+  <button class="nav-btn" onclick="go('projects')">项目STAR</button>
+  <button class="nav-btn" onclick="go('qa')">面试问答</button>
+  <button class="nav-btn" onclick="go('methods')">运营方法论</button>
+  <button class="nav-btn" onclick="go('data')">关键数据</button>
+</nav>
+
+<!-- ===== 自我介绍 ===== -->
+<div class="section active" id="intro">
+  <div class="sec-header">
+    <div class="sec-icon">👋</div>
+    <h1>自我介绍</h1>
+    <p>快宝 · AI增长运营 · 明天面试</p>
+  </div>
+
+  <div class="intro-block">
+    <div class="intro-text">
+      面试官您好，我叫马岳，求职方向是 AI 增长运营。<br><br>
+      <span class="hl">【背景】</span> 我有信息管理本科和爱尔兰国立高威大学信息系统管理硕士背景，在小码王科技有近3年一线教学运营经历。<span style="color:rgba(240,238,234,0.6);">（在职期间我实际负责了直管两个校区共388名学员的用户全链路运营，包括分层管理、续费跟进、流失预警和裂变活动设计，而不只是站在讲台上。）</span><br><br>
+      <span class="hl">【用户运营能力】</span> 我独立设计并推行了四套SOP——体验课转化、续费跟进、退费预警和裂变活动——搭建了从拉新到留存到转化的完整运营体系。单场体验课转化率最高70%，续费率从75%提升至85%+，直管校区退费率控制在2%以内，年度裂变活动贡献新签营收38万+。<br><br>
+      <span class="hl">【AI实战能力】</span> 近一年我深度投入AI应用运营方向，独立搭建了AI教培Prompt运营平台，覆盖Prompt模板库设计、讲师工具台、测评体系和数据看板，并基于学员生命周期模型做了用户分层运营和A/B测试，形成了「工具搭建→用户分层→内容生产→数据复盘」的完整AI运营闭环。<br><br>
+      <span class="hl">【匹配这个岗位】</span> 贵司AI增长运营岗需要把用户增长、内容运营和数据驱动结合，我在ToC用户增长链路和AI工具落地上都有真实实践，希望能加入快宝，参与AI产品的增长运营全链路工作。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">⏱ 三个长度版本</div>
+    <div class="rule">
+      <div class="rule-title">1分钟版（开场快速版）</div>
+      <div class="rule-body">背景 → 在小码王实际负责用户全链路运营（不只是教学）→ 拿过的最好结果（70%转化率 / 85%续费率）→ AI运营实战项目 → 匹配快宝</div>
+    </div>
+    <div class="rule amber">
+      <div class="rule-title">3分钟版（标准版）</div>
+      <div class="rule-body">完整版本如上，背景+用户运营能力+AI实战+岗位匹配，控制节奏不要超3分钟</div>
+    </div>
+    <div class="rule coral">
+      <div class="rule-title">被追问时的补充</div>
+      <div class="rule-body">「虽然职位是讲师，但我实际的工作重心在运营侧——SOP设计、数据追踪、跨角色协同，这4套SOP推广到4个校区都在执行。」</div>
+    </div>
+  </div>
+
+  <div class="tip">💡 开场最关键：主动说清楚「我在小码王不只是讲师，我是业务运营角色」，否则面试官会按教师理解你的背景。</div>
+</div>
+
+<!-- ===== 项目STAR ===== -->
+<div class="section" id="projects">
+  <div class="sec-header">
+    <div class="sec-icon">🚀</div>
+    <h1>项目介绍 STAR</h1>
+    <p>按岗位匹配度优先排序 · 点击展开详细内容</p>
+  </div>
+
+  <!-- 项目2 -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <span class="badge b-coral">优先讲</span>
+        <span class="badge b-amber">最匹配JD</span>
+      </div>
+      <span style="font-size:11px;color:var(--muted)">项目2</span>
+    </div>
+    <h3>学员生命周期运营模型</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">用户增长与精细化运营 · 用户分层 · A/B测试</p>
+
+    <div class="star-block">
+      <span class="star-tag tag-s">S 背景</span>
+      <p>运营团队直接套用互联网「沉睡用户唤醒」逻辑，用统一话术触达续费意向不明家长，引发反感且转化率低。少儿编程用户逻辑根本不同——学员不会「沉睡」，只会在特定课次节点出现适配问题或续费顾虑。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-t">T 目标</span>
+      <p>以直管校区100名学员为样本，建立以<span class="hl">课次节点为轴</span>的生命周期分层模型，通过A/B测试验证续费决策期最优触达策略。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-a">A 行动</span>
+      <p>① 设计5阶段分层（激活期/早期筛选期/健康运营期/续费铺垫期/续费决策期），拒绝照搬活跃/沉睡/流失模型<br>② 建立风险分计算体系（出勤率25%+作业率25%+成绩趋势15%+家长沟通15%+课次节点10%+情绪10%）<br>③ 续费决策期设计A/B测试：「成长成果型」vs「个性化规划型」对比触达策略<br>④ 为5个阶段各设计A/B/C三版AI触达内容，明确触达责任人、渠道和推荐模型</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-r">R 结果</span>
+      <p>早期筛选期4名预警学员<span class="hl-amber">回复率100%</span>，75%在第4课前完成处理；续费决策期6名不确定学员回复率83.3%；A/B测试沉淀「两步触达策略」：先成果报告建立情感，再规划推动决策。</p>
+    </div>
+  </div>
+
+  <!-- 项目3 -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <span class="badge b-teal">内容运营</span>
+        <span class="badge b-blue">跨平台</span>
+      </div>
+      <span style="font-size:11px;color:var(--muted)">项目3</span>
+    </div>
+    <h3>AIGC内容运营体系</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">内容矩阵 · A/B测试 · Prompt迭代</p>
+
+    <div class="star-block">
+      <span class="star-tag tag-s">S 背景</span>
+      <p>项目1的Prompt工具建好了，但内容产出靠人靠感觉——讲师每次用哪个Prompt要重新想，对外家长社群内容临时发挥，AI生成质量波动大没有评分记录。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-t">T 目标</span>
+      <p>建立可持续的AIGC内容生产流水线，通过A/B测试沉淀内容规则，测试结论反向驱动Prompt迭代。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-a">A 行动</span>
+      <p>① 5步SOP：选题→AI生成→人工审核（三项必检）→优化→发布记录，单篇15-25分钟<br>② 双轨内容矩阵：对内（讲师运营）+ 对外（家长社群），各有独立渠道和质量标准<br>③ 四组A/B测试：互动引导有无、首课反馈长短、社群温暖vs干货、招募场景开头vs直接开头<br>④ 沉淀三条铁律：场景开头、具体互动引导、7:3内容比例（温暖型:干货型）</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-r">R 结果</span>
+      <p>互动引导使家长回复率<span class="hl-amber">+225%</span>（20%→65%）；场景开头使私信询问率<span class="hl-amber">+79%</span>；8条Prompt平均质量分4.0→4.7；内容生产效率提升3-5倍。项目2和项目3的A/B测试交叉验证「情感优先」内容规则。</p>
+    </div>
+  </div>
+
+  <!-- 项目1 -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <span class="badge b-purple">AI工具</span>
+        <span class="badge b-green">可演示</span>
+      </div>
+      <span style="font-size:11px;color:var(--muted)">项目1</span>
+    </div>
+    <h3>AI教培Prompt运营平台</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Prompt工程 · 数据看板 · 版本管理</p>
+
+    <div class="star-block">
+      <span class="star-tag tag-s">S 背景</span>
+      <p>少儿编程讲师每周22-27小时消耗在重复性工作（备课/批改/学情/家长沟通），缺少标准化AI工具，各自摸索无法沉淀为团队资产，也没有数据可以复盘。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-a">A 行动</span>
+      <p>独立搭建讲师工具台（30条Prompt模板、5大场景、标准化变量）+ 运营后台（使用数据、质量评分、月度报告）；设计五维评分体系（结构/场景/可执行/专业/稳定）和版本管理规则；构建106条测试记录，识别8个稳定满分模板和10个待优化模板。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-r">R 结果</span>
+      <p>讲师端<span class="hl">20次真实使用</span>，累计节省<span class="hl">371分钟</span>，平均满意度<span class="hl">4.2/5</span>，好评率80%；平均测试得分91.1；可直接演示HTML产品。</p>
+    </div>
+  </div>
+
+  <!-- 小码王运营经历 -->
+  <div class="card">
+    <div style="margin-bottom:12px;">
+      <span class="badge b-amber">工作经历转化</span>
+      <span class="badge b-green">真实数据</span>
+    </div>
+    <h3>小码王 · 用户全链路运营实战</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">2021.4-2023.4 · 实际负责双校区388名学员</p>
+
+    <div class="star-block">
+      <span class="star-tag tag-s">S 背景</span>
+      <p>教培机构用户运营无系统性方法论，体验课转化靠个人发挥、续费预警靠感觉、退费被动应对，四个校区标准不统一。</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-a">A 行动</span>
+      <p>① 设计体验课转化SOP，制定用户画像收集标准、课堂执行时序、关键转化时刻设计和销售跟进分级<br>② 建立退费预警5维权重评分体系（出勤率35%+作业率25%+情绪20%+成绩15%+续费节点10%），每周生成高/中风险名单<br>③ 制定T-60→T-30→T-15→T-7分阶段续费跟进SOP，设计洋葱式挖掘真实顾虑的标准流程<br>④ 设计双层激励裂变机制（参与奖+转化奖），规划全年10场裂变活动</p>
+    </div>
+    <div class="divider"></div>
+    <div class="star-block">
+      <span class="star-tag tag-r">R 结果</span>
+      <p>单场体验课转化率最高<span class="hl-amber">70%</span>，获月度新签冠军；续费率<span class="hl-amber">75%→85%+</span>；直管校区退费率<span class="hl-amber">&lt;2%</span>；年度裂变活动新签营收<span class="hl-amber">38万+</span>；SOP推广至4个校区执行。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 面试问答 ===== -->
+<div class="section" id="qa">
+  <div class="sec-header">
+    <div class="sec-icon">💬</div>
+    <h1>面试问答</h1>
+    <p>点击问题展开参考回答</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">🔴 必问题</div>
+    <div id="qa-must"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">🟠 岗位专业题</div>
+    <div id="qa-pro"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">🟡 质疑/弱项题</div>
+    <div id="qa-hard"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">🟢 反问环节</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+      <div class="rule"><div class="rule-body">「快宝目前AI工具的核心用户是哪类人群？增长运营这个岗位在拉新和留存上，当前最核心的挑战是什么？」</div></div>
+      <div class="rule amber"><div class="rule-body">「增长运营和产品、技术的协同方式是怎样的？内容运营和数据分析是在同一团队内吗？」</div></div>
+      <div class="rule coral"><div class="rule-body">「这个岗位入职后前三个月最核心的目标或优先级是什么？」</div></div>
+    </div>
+    <div class="tip">💡 选1-2个问，别全问，体现真实好奇心</div>
+  </div>
+</div>
+
+<!-- ===== 运营方法论 ===== -->
+<div class="section" id="methods">
+  <div class="sec-header">
+    <div class="sec-icon">📚</div>
+    <h1>用户运营方法论</h1>
+    <p>基于BOSS直聘技能标签 · 结合真实项目经历</p>
+  </div>
+
+  <div id="methods-content"></div>
+</div>
+
+<!-- ===== 关键数据 ===== -->
+<div class="section" id="data">
+  <div class="sec-header">
+    <div class="sec-icon">📊</div>
+    <h1>关键数据速记</h1>
+    <p>面试前过一遍 · 报数字要脱口而出</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">小码王工作经历（真实数据）</div>
+    <div class="stats">
+      <div class="stat"><div class="val">70%</div><div class="lbl">最高单场体验课转化率</div></div>
+      <div class="stat"><div class="val">85%+</div><div class="lbl">续费率（从75%提升）</div></div>
+      <div class="stat"><div class="val">&lt;2%</div><div class="lbl">直管校区退费率</div></div>
+      <div class="stat"><div class="val">38万+</div><div class="lbl">年度裂变新签营收</div></div>
+      <div class="stat"><div class="val">90%+</div><div class="lbl">学员续费满意度</div></div>
+      <div class="stat"><div class="val">30%</div><div class="lbl">部门人效提升</div></div>
+    </div>
+    <div style="margin-top:6px;">
+      <table>
+        <tr><td style="color:var(--muted)">直管校区</td><td>2个校区，8位讲师，388名学员</td></tr>
+        <tr><td style="color:var(--muted)">全部校区</td><td>4个校区，18位讲师，898名学员</td></tr>
+        <tr><td style="color:var(--muted)">裂变活动</td><td>全年10场，平均每场10条线索，转化率20%</td></tr>
+        <tr><td style="color:var(--muted)">续费SOP效果</td><td>所跟进学员个人续费率92%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">AI项目数据（模拟验证数据）</div>
+    <div class="stats">
+      <div class="stat"><div class="val">28%→86%</div><div class="lbl">AI工具使用率12周</div></div>
+      <div class="stat"><div class="val">+225%</div><div class="lbl">互动引导提升回复率</div></div>
+      <div class="stat"><div class="val">+79%</div><div class="lbl">场景开头提升询问率</div></div>
+      <div class="stat"><div class="val">35%→80%</div><div class="lbl">预流失干预成功率</div></div>
+      <div class="stat"><div class="val">3.6→4.7</div><div class="lbl">Prompt平均质量分</div></div>
+      <div class="stat"><div class="val">371min</div><div class="lbl">累计节省时间</div></div>
+    </div>
+    <div class="tip">⚠️ AI项目数据说明：这些是基于真实业务经验构建的模拟验证数据，面试时可主动说「这是基于真实场景的模拟验证项目」，不要包装成真实公司后台数据。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">A/B测试四组结论（记住结论比记住数字更重要）</div>
+    <table>
+      <tr><th>测试</th><th>结论</th><th>规则</th></tr>
+      <tr><td>互动引导</td><td style="color:var(--teal)">回复率+225%</td><td>结尾必须有具体可执行互动</td></tr>
+      <tr><td>首课反馈长短</td><td style="color:var(--teal)">简洁版更优</td><td>日常默认60-80字</td></tr>
+      <tr><td>温暖vs干货</td><td style="color:var(--teal)">温暖型高67%</td><td>7:3内容比例</td></tr>
+      <tr><td>场景开头</td><td style="color:var(--teal)">询问率+79%</td><td>招募类必须场景开头</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-label">三级指标体系速查</div>
+    <table>
+      <tr><th>层级</th><th>代表指标</th><th>W1→W12</th></tr>
+      <tr><td style="color:var(--coral)">L0业务层</td><td>预流失干预成功率</td><td>35%→80%</td></tr>
+      <tr><td style="color:var(--amber)">L1运营层</td><td>家长主动回复率</td><td>18%→52%</td></tr>
+      <tr><td style="color:var(--teal)">L2工具层</td><td>Prompt直接采用率</td><td>42%→78%</td></tr>
+    </table>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted)">面试时重点讲L1——最接近AI动作，也最接近业务结果</div>
+  </div>
+</div>
+
+<script>
+// QA数据
+const mustQAs = [
+  {
+    q: "请做一下自我介绍",
+    a: "见「自我介绍」标签页。核心是主动说清楚自己在小码王是运营角色而非单纯讲师，不要等面试官追问。结构：背景简介 → 用户运营实战成果 → AI项目能力 → 岗位匹配，控制在3分钟内。"
+  },
+  {
+    q: "为什么从教育行业转到AI增长运营？",
+    a: "不是「转行」，是能力迁移。我在小码王做的本质就是用户增长运营——拉新（体验课转化70%）、留存（流失预警、续费跟进续费率85%+）、裂变（年度38万+新签营收）。回国后我判断AI工具是改变内容运营和用户运营效率的底层变量，所以花了近一年把AI工具落地到熟悉的教培场景去验证，形成了四个项目的完整AI运营体系。这是能力的深化，不是方向的跳跃。"
+  },
+  {
+    q: "你怎么理解「AI增长运营」这个岗位？",
+    a: "我理解有三个层次：第一层，把AI工具（ChatGPT、CapCut、Coze等）用到内容生产和用户运营的提效场景，降低人力成本；第二层，围绕AI产品本身做用户全生命周期运营——分层识别、精准触达、数据驱动策略迭代；第三层，用内容运营和裂变机制持续给AI产品带来用户增长。结合快宝的AI工具产品属性，核心是让更多目标用户知道并使用产品，并且留下来——内容是获客媒介，数据是决策工具，AI是效率杠杆。"
+  }
+];
+
+const proQAs = [
+  {
+    q: "说说你对用户分层的理解，你是怎么做的？",
+    a: "用户分层的核心是：在正确的时间节点识别正确的用户状态，给出正确的运营动作。我在项目2里拒绝直接套用互联网「活跃/沉睡/流失」模型，因为教培用户的逻辑根本不同——学员不会「沉睡」，只会在特定课次节点出现适配问题。所以我以「课次节点」为轴做了5阶段分层，并设计了风险分计算体系（出勤率25%+作业率25%+成绩趋势15%+家长沟通15%+续费节点10%+情绪10%），每个层级对应不同的运营动作。分层的价值不是贴标签，而是让每次触达都有明确的业务目的。"
+  },
+  {
+    q: "你做过裂变拉新吗？具体怎么设计的？",
+    a: "做过，在小码王全年设计执行了10场裂变活动。核心设计是双层激励机制：第一层「参与奖励」——老学员带朋友来活动就有小礼物，不要求朋友报名，降低邀请门槛；第二层「转化奖励」——朋友成功报名后老学员获得更大奖励，激励推动转化。这两层叠加让老学员既愿意邀请，又有动力推动朋友报名。执行层面：活动前2周运营制定本地化方案，讲师课堂动员，教务主导家长联系；活动后3天内必须完成跟进，超过3天热度明显下降。全年平均每场10条线索，转化率20%，合计新签营收38万+。"
+  },
+  {
+    q: "续费跟进你是怎么做的，有什么方法论？",
+    a: "我设计的是T-60到期前分阶段跟进体系：T-60识别名单+风险分级，此阶段只做关系铺垫不提续费；T-30运营整理学员成长数据，班主任用AI生成的成长报告铺垫家长，全程不提续费；T-15试探意向，按「已续/有意向/不确定/明确不续」四类意向分级响应；T-7针对不确定和不续费家长协同攻坚，用洋葱式追问挖掘真实顾虑（第1次模糊拒绝→第2次表层原因→第3次接近真实→第4次找到真正痛点），再给个性化解决方案。我个人跟进的学员续费率达到92%，方法论推广后校区整体从75%提升至85%+。"
+  },
+  {
+    q: "如何做内容的冷启动？从0到1你会怎么规划？",
+    a: "三步走：① 赛道定位——找细分人群而不是宽泛方向，降低竞争烈度；② 内容起盘——前20篇集中测试不同选题和内容形式，用互动率和私信询问率找到高效内容逻辑后批量复制；③ 跑通获客链路——在评论区和私信主动建立核心用户关系，验证从公域流量到私域或产品转化的完整链路。基于我的A/B测试结论：内容起盘阶段优先温暖型场景内容（互动率高出67%），结尾必须有具体互动引导（提升回复率225%），活动招募类必须场景开头（询问率+79%）。"
+  },
+  {
+    q: "你怎么用数据驱动运营决策？举个具体例子。",
+    a: "用项目4的案例：第9周复盘时发现AI工具使用率连续2周停滞79-80%，达不到80%目标。深入看个体数据，发现2位讲师本周使用频次明显偏低。针对这2人做5分钟非正式访谈，得到关键信息：「某些模板要填7-8个变量，不如直接写」——这不是意愿问题，是易用性问题。对策：把高变量模板从7个必填压缩到3个，其余设智能默认值。结果：W10使用率82%首次稳定突破目标，被访谈讲师使用频次2次/周→5次/周。核心逻辑：数据发现异常→个体访谈定位根因→精准干预→验证效果。"
+  }
+];
+
+const hardQAs = [
+  {
+    q: "你的工作经历是讲师，不是运营，为什么认为能做运营？",
+    a: "职位名称是讲师，但实际职责是运营角色。我独立设计了四套SOP（体验课转化、续费跟进、退费预警、裂变活动），负责直管两校区388名学员的全链路数据追踪，管理18位讲师的运营绩效，并把方法论推广到另外两个校区。这些产出是典型的运营工作内容。同时我在小码王做了3年，对ToC用户（家长和学员）的心理、转化逻辑、生命周期管理都有一线实感，这是很多没有做过教培运营的人缺少的。"
+  },
+  {
+    q: "你的海外社媒（Twitter/TikTok）经验怎么样？JD里有这个要求。",
+    a: "我目前在海外社媒的实操经验相对有限，主要是有较好的英语读写能力（多邻国110分，爱尔兰留学背景），研究过Twitter/TikTok的算法逻辑和内容差异化定位。但海外内容运营的核心逻辑和国内是相通的——找到目标人群、内容本地化、数据驱动迭代。我有完整的内容运营方法论和A/B测试经验，学习海外平台的具体操作规则成本会比较低，如果岗位需要，我愿意优先从海外内容策划和数据分析切入快速上手。"
+  },
+  {
+    q: "你的A/B测试样本量很小，这能说明问题吗？",
+    a: "我在项目文档里就标注了这是「探索性小样本测试，不做统计显著性包装，用于策略方向判断」。6人样本不能得出绝对结论，但有两个价值：第一，四组测试全部指向同一方向（情感优先），且项目2和项目3的测试结论交叉验证，相互印证增加了可信度；第二，运营实践中先有方向、快速验证、持续迭代，比等待完美样本量再行动更重要。如果要真正验证需要扩大到30人以上样本，这是我主动标注的局限性。"
+  },
+  {
+    q: "AI项目数据是真实的吗？",
+    a: "AI项目是基于小码王真实业务经验构建的模拟验证项目。业务场景、讲师痛点、SOP流程、指标设计都来自真实业务；使用记录和测试数据是我自己操作产生的真实验证数据。面试时我会主动说明这是「基于真实业务场景的模拟验证」，不会包装成公司全量经营数据。"
+  }
+];
+
+function renderQAs(data, containerId) {
+  const c = document.getElementById(containerId);
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'qa-item';
+    div.innerHTML = `
+      <div class="qa-q" onclick="toggleQA(this)">
+        <span>${item.q}</span>
+        <span class="arr">▼</span>
+      </div>
+      <div class="qa-a">${item.a}</div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function toggleQA(el) {
+  const ans = el.nextElementSibling;
+  const arr = el.querySelector('.arr');
+  ans.classList.toggle('open');
+  arr.textContent = ans.classList.contains('open') ? '▲' : '▼';
+}
+
+renderQAs(mustQAs, 'qa-must');
+renderQAs(proQAs, 'qa-pro');
+renderQAs(hardQAs, 'qa-hard');
+
+// 方法论数据
+const methods = [
+  {
+    title: 'RFM模型',
+    color: 'teal',
+    what: '通过最近购买时间（Recency）、购买频率（Frequency）、购买金额（Monetary）三维度对用户价值分层。',
+    my: '在教培场景我用「课次节点+出勤率+家长互动频率」替代RFM，因为教培用户没有「购买频率」，但有「参与密度」和「节点敏感度」。本质逻辑相同：识别高价值用户优先维护，识别低活跃用户提前干预。',
+    say: '「RFM核心是识别不同用户状态给差异化策略，不是所有用户都一视同仁。在教培场景我把R换成续费节点临近程度，F换成出勤率，M换成历史消费+续费意向，同样能做到精准分层。」'
+  },
+  {
+    title: '裂变拉新',
+    color: 'amber',
+    what: '通过现有用户的社交关系，以激励机制驱动新用户获取，核心是降低邀请门槛+激励转化行为。',
+    my: '设计了双层激励机制（参与奖+转化奖），全年10场活动，平均每场10条线索，转化率20%，年度贡献新签营收38万+。关键是：① 激励要落在「带来就有奖励」不是「对方报名才有」；② 活动后3天内必须跟进，超时热度下降明显；③ 内容要让家长愿意转发，不能有浓郁广告味。',
+    say: '「裂变的核心是降低传播摩擦——让现有用户觉得邀请这件事本身就值得做，而不是为了奖励去推销。我设计的第一层奖励是「带来就有」，不要求对方报名，这极大降低了邀请的心理负担。」'
+  },
+  {
+    title: '生命周期管理',
+    color: 'coral',
+    what: '将用户按照与产品/服务的关系阶段分层，在不同阶段给予不同的运营动作，最大化用户长期价值。',
+    my: '设计了5阶段学员生命周期模型：激活期（第1课）→早期筛选期（第2-4课）→健康运营期（第5-20课）→续费铺垫期（剩余30-15课）→续费决策期（剩余15课后）。每个阶段有明确的核心目标、主责角色和AI辅助内容。拒绝照搬互联网「沉睡用户」逻辑，因为教培用户的生命周期由课次节点驱动而非时间轴。',
+    say: '「生命周期管理最重要的是找到对这个业务真正有意义的分层维度。教培不是按「上次登录时间」分层，而是按「距续费节点的课次」分层——这两个维度会给出完全不同的运营策略。」'
+  },
+  {
+    title: '用户激励体系',
+    color: 'purple',
+    what: '通过积分、等级、勋章、物质奖励等机制，驱动用户完成目标行为，提升参与度和留存率。',
+    my: '在裂变活动中设计双层物质激励（参与奖15-30元+转化奖50-100元）。在用户留存方向，通过「作品成就感」设计（让孩子展示作品给家长）作为内在激励，比纯物质奖励更可持续——孩子展示作品时的成就感是续费决策的最强推动力之一。',
+    say: '「激励体系的本质是把用户想要的行为变成他们愿意做的行为。最好的激励是内在动机——让用户觉得做这件事本身就值得，物质激励只是降低启动门槛。」'
+  },
+  {
+    title: '转化变现',
+    color: 'green',
+    what: '将潜在用户或已有用户转化为付费用户，或提升现有用户的付费深度，核心是转化漏斗设计和关键节点优化。',
+    my: '体验课转化漏斗：到场→作品完成（关键指标≥80%）→家长进入看作品展示（关键时刻）→销售跟进签单。最高单场转化率70%。关键是：转化发生在学员情绪最高涨的那个时刻——作品刚完成、孩子最有成就感时邀请家长进来，而不是课程结束后硬推。',
+    say: '「转化的最佳时机是用户价值感知最强的那一刻。在教培场景，这个时刻是孩子刚完成作品、家长看到孩子骄傲展示的那5分钟——这时续费话题切入是顺势而为，而不是强推。」'
+  },
+  {
+    title: '社群搭建维护',
+    color: 'blue',
+    what: '建立和运营用户社群，通过持续内容输出和互动，提升用户粘性、口碑传播和转化。',
+    my: '家长微信群每周3-4条内容，节奏：月初建关系→月中做转化→月末复盘。内容规则：7成温暖型（场景共鸣、成长故事）+3成干货型（备考攻略、工具方法）。关键指标：互动率（回复/点赞）、私信询问率、裂变活动参与率。A/B测试证明：温暖型互动率比干货型高67%；场景开头比直接开头私信询问率高79%。',
+    say: '「社群不是公告栏，是关系场。运营社群最重要的不是内容数量，而是内容能否触发家长「我也遇到过这种情况」的共鸣——共鸣比知识传递更能建立信任。」'
+  },
+  {
+    title: '用户留存',
+    color: 'teal',
+    what: '通过运营手段降低用户流失率，提升用户在产品/服务中持续参与的时间和深度。',
+    my: '退费预警体系：5维权重评分（出勤35%+作业25%+情绪20%+成绩15%+续费节点10%），每周生成高/中风险名单，高风险24小时内启动干预。核心是「主动出击不等待」——在家长提出退费之前识别信号介入，转被动救火为主动预防。直管校区退费率控制在2%以内。',
+    say: '「留存的关键是提前行动。等到用户说要离开再挽留成功率很低。我的退费预警体系核心思路是：用数据在用户流失前2-3周就识别出高风险信号，介入时间越早挽留成功率越高。」'
+  },
+  {
+    title: '用户行为分析',
+    color: 'amber',
+    what: '通过数据分析用户的行为路径、偏好和流失节点，为运营决策提供依据。',
+    my: '建立了L0/L1/L2三级指标体系：L2看工具质量（幻觉率、采用率、评分）→L1看运营过程（家长回复率、干预成功率）→L0看业务结果（续费率、退费率）。设计埋点事件字典（12个关键事件）统一数据口径。关键原则：不能只看工具使用率，要看工具使用是否真的改善了业务结果。',
+    say: '「行为分析最容易犯的错误是只看表面指标——比如只看「使用了多少次AI工具」，而忽略了「这些使用是否真的让业务结果变好」。我的三级指标体系就是为了避免这个陷阱。」'
+  }
+];
+
+const mc = document.getElementById('methods-content');
+methods.forEach(m => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3>${m.title}</h3>
+      <span class="badge b-${m.color}">${m.title}</span>
+    </div>
+    <div class="rule" style="border-left-color:var(--${m.color})">
+      <div class="rule-title" style="color:var(--${m.color})">定义</div>
+      <div class="rule-body">${m.what}</div>
+    </div>
+    <div class="rule" style="border-left-color:var(--amber);margin-top:6px">
+      <div class="rule-title" style="color:var(--amber)">我的实践</div>
+      <div class="rule-body">${m.my}</div>
+    </div>
+    <div class="rule" style="border-left-color:var(--purple);margin-top:6px">
+      <div class="rule-title" style="color:var(--purple)">面试说法</div>
+      <div class="rule-body" style="font-style:italic">${m.say}</div>
+    </div>
+  `;
+  mc.appendChild(card);
+});
+
+// 导航
+function go(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
